@@ -62,7 +62,7 @@ namespace FPS
 
                     sql = string.Format("INSERT INTO " + tableName + " (item_uuid, type, data)" +
                     " VALUES ( \"{0}\", \"{1}\", \"{2}\");",
-                    ItemData.Data.ID,
+                    ItemData.Data.itemUUID,
                     ItemData.Data.Type,
                     itemSerializeDataInterface.SerializeItemData()
                     );
@@ -87,9 +87,9 @@ namespace FPS
             _connection = null;
         }
 
-        public IBaseData[] GetAllItems(string player_uuid = "")
+        public BaseItem[] GetAllItems(string player_uuid = "")
         {
-            List<IBaseData> items = new List<IBaseData>();
+            List<BaseItem> items = new List<BaseItem>();
 
             string conn = GetDBPath();
 
@@ -133,25 +133,14 @@ namespace FPS
                 
                 var newData = Helper.FactoreData<BaseData>(data); // <<- Data would come serialized from DB;
 
-                IBaseData extItemDB = null;
+                BaseItem extItemDB = null;
                 if (newData != null)
                 {
                     ISerializeData iSerializeInterface = newData as ISerializeData;
                     
                     if (iSerializeInterface != null)
                     {
-                        var newItem = iSerializeInterface.FactoryCloneItemFromData();
-                        if (newItem != null)
-                        {
-                            //extItemDB = new BaseItem() as IBaseData;
-                            //extItemDB.Data = newItem.Data;
-                            //extItemDB.BaseData.ExternalID = id;
-                            //extItemDB.BaseNSData = newItem.BaseNSData;
-                            //extItemDB.ObjectUUID = newItem.BaseData.UniqueUUID;
-                            //extItemDB.Position = iSerializePlacementInterface.DeserializePosition(position);
-                            //extItemDB.Rotation = iSerializePlacementInterface.DeserializeRotation(rotation);
-                            //extItemDB.IsBurning = isburning;
-                        }
+                        extItemDB = iSerializeInterface.FactoryCloneItemFromData();
                     }
                     else
                     {

@@ -2,11 +2,8 @@
 
 namespace FPS
 {
-	public class ItemTests : MonoBehaviour
+	public class CustomoPropertyTests : MonoBehaviour
 	{
-        //public BuildblockItem BuildingBlock = new BuildblockItem();
-        //public WeaponItem gun = new WeaponItem();
-
         public CampfireItem campfire = new CampfireItem();
 
         private void Start()
