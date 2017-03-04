@@ -50,6 +50,10 @@ namespace FPS
             
             if (ItemData != null)
             {
+                Debug.LogWarning("The item data type is [" + ItemData.Data.GetType().Name + "]");
+                string description = ItemData.Data.Properties.Get<string>("description");
+                Debug.LogWarning("The custom property description has a value of [" + description + "]");
+
                 if (ItemData.Data is ISerializeData)
                 {
                     ISerializeData itemSerializeDataInterface = ItemData.Data as ISerializeData;

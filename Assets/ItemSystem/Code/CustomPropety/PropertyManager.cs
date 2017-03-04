@@ -6,11 +6,24 @@ namespace FPS
     [System.Serializable]
 	public class PropertyManager
 	{
-        public List<Property> props;
+        [SerializeField]
+        public List<Property> _props;
+        public List<Property> Props
+        {
+            get
+            {
+                if(_props == null)
+                {
+                    _props = new List<Property>();
+                }
+                return _props;
+            }
+            private set { _props = value; }
+        }
 
         public T Get<T>(string key)
         {
-            foreach (Property p in props)
+            foreach (Property p in Props)
             {
                 if(p.Key == key)
                 {
@@ -33,7 +46,7 @@ namespace FPS
 
         public void Set(string key, object value)
         {
-            foreach (Property p in props)
+            foreach (Property p in Props)
             {
                 if (p.Key == key)
                 {
@@ -48,7 +61,7 @@ namespace FPS
         public void Add(Property prop)
         {
             // Check if we have this property already
-            foreach (Property p in props)
+            foreach (Property p in Props)
             {
                 if (p.Key == prop.Key)
                 {
@@ -58,16 +71,16 @@ namespace FPS
             }
             Debug.Log("[Add] Adding property with key of [" + prop.Key + "]");
             // The property was not found lets create it
-            props.Add(prop);
+            Props.Add(prop);
         }
 
         public void Delete(string key)
         {
-            foreach (Property p in props.ToArray())
+            foreach (Property p in Props.ToArray())
             {
                 if (p.Key == key)
                 {
-                    props.Remove(p);
+                    Props.Remove(p);
                     return;
                 }
             }

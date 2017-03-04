@@ -20,6 +20,7 @@ namespace FPS
 
         private void Init()
         {
+            (Data as WorldData).Properties = new PropertyManager();
             Data.Type = ItemTypeEnum.WorldItem;
         }
 

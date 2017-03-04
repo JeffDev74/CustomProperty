@@ -8,9 +8,6 @@ namespace FPS
     [System.Serializable]
     public class WorldData : BaseData, ISerializeData
     {
-        [SerializeField]
-        public PropertyManager Properties;
-
         #region ISerializeData Implementation
         public string SerializeItemData()
         {

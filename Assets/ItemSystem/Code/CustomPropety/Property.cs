@@ -6,7 +6,7 @@ namespace FPS
     public class Property : IProperty
     {
         [SerializeField]
-        private string _type;
+        public string _type;
         public string Type
         {
             get { return _type; }
@@ -14,7 +14,7 @@ namespace FPS
         }
 
         [SerializeField]
-        private string _key;
+        public string _key;
         public string Key
         {
             get { return _key; }
@@ -22,7 +22,7 @@ namespace FPS
         }
 
         [SerializeField]
-        private string _value;
+        public string _value;
         public string Value
         {
             get { return _value; }
