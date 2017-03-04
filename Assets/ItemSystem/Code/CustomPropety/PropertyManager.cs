@@ -3,7 +3,8 @@ using UnityEngine;
 
 namespace FPS
 {
-	public class PropertyManager : MonoBehaviour
+    [System.Serializable]
+	public class PropertyManager
 	{
         public List<Property> props;
 
@@ -73,4 +74,5 @@ namespace FPS
             Debug.LogWarning("[DeleteProp] The custom property with key of [" + key + "] does not exist.");
         }
     }
+    
 }
