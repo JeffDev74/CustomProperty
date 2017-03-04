@@ -7,7 +7,7 @@ namespace FPS
 	{
         [SerializeField]
         private WorldData _data;
-        public BaseData Data
+        public override BaseData Data
         {
             get { return _data; }
             set { _data = value as WorldData; }
@@ -15,7 +15,7 @@ namespace FPS
 
         [SerializeField]
         private WorldNSData _nsData;
-        public BaseNSData NSData
+        public override BaseNSData NSData
         {
             get { return _nsData; }
             set { _nsData = value as WorldNSData; }

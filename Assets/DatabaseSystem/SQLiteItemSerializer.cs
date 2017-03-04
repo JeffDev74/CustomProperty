@@ -7,7 +7,6 @@ using System.Data;
 
 namespace FPS
 {
-
     public class SQLiteItemSerializer : MonoBehaviour
     {
         public static SQLiteItemSerializer instance;
@@ -30,13 +29,13 @@ namespace FPS
 
         void Start()
         {
-            DB_PATH = "StreamingAssets/Databases/SQLite/";
+            DB_PATH = "StreamingAssets/Databases/";
             DB_NAME = "SerializedItems.bytes";
         }
 
         public string GetDBPath()
         {
-            return "URI=file:" + Application.dataPath + "/StreamingAssets/Databases/SQLite/SerializedItems.bytes";
+            return "URI=file:" + Application.dataPath + "/StreamingAssets/Databases/SerializedItems.bytes";
         }
 
         public void CreateItem(IBaseData ItemData)
@@ -126,12 +125,12 @@ namespace FPS
             IDataReader reader = dbcmd.ExecuteReader();
             while (reader.Read())
             {
-                int id = reader.GetInt32(0);
-                string item_uuid = reader.GetString(1);
-                string type = reader.GetString(2);
+                //int id = reader.GetInt32(0);
+                //string item_uuid = reader.GetString(1);
+                //string type = reader.GetString(2);
                 string data = reader.GetString(3);
                 
-                var newData = Helper.FactoreData<BaseData>(data); // <<- Data would come serialized from DB;
+                var newData = Helper.FactoreData<BaseData>(data);
 
                 BaseItem extItemDB = null;
                 if (newData != null)

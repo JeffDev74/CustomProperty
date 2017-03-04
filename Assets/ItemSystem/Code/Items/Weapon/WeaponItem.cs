@@ -7,7 +7,7 @@ namespace FPS
 	{
         [SerializeField]
         private WeaponBaseData _data;
-        public BaseData Data
+        public override BaseData Data
         {
             get { return _data; }
             set { _data = value as WeaponBaseData; }
@@ -15,7 +15,7 @@ namespace FPS
 
         [SerializeField]
         private WeaponNSData _nsData;
-        public BaseNSData NSData
+        public override BaseNSData NSData
         {
             get { return _nsData; }
             set { _nsData = value as WeaponNSData; }
