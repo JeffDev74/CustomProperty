@@ -50,10 +50,6 @@ namespace FPS
             
             if (ItemData != null)
             {
-                Debug.LogWarning("The item data type is [" + ItemData.Data.GetType().Name + "]");
-                string description = ItemData.Data.Properties.Get<string>("description");
-                Debug.LogWarning("The custom property description has a value of [" + description + "]");
-
                 if (ItemData.Data is ISerializeData)
                 {
                     ISerializeData itemSerializeDataInterface = ItemData.Data as ISerializeData;
@@ -63,11 +59,19 @@ namespace FPS
                         return;
                     }
 
-                    sql = string.Format("INSERT INTO " + tableName + " (item_uuid, type, data)" +
-                    " VALUES ( \"{0}\", \"{1}\", \"{2}\");",
+                    IPropertySerializer propertiesInterface = ItemData.Data.Properties as IPropertySerializer;
+                    string serializedProperties = string.Empty;
+                    if (propertiesInterface != null)
+                    {
+                        serializedProperties = propertiesInterface.Serialize();
+                    }
+
+                    sql = string.Format("INSERT INTO " + tableName + " (item_uuid, type, data, properties)" +
+                    " VALUES ( \"{0}\", \"{1}\", \"{2}\", \"{3}\");",
                     ItemData.Data.itemUUID,
                     ItemData.Data.Type,
-                    itemSerializeDataInterface.SerializeItemData()
+                    itemSerializeDataInterface.SerializeItemData(),
+                    serializedProperties
                     );
                     _command.CommandText = sql;
                     _command.ExecuteNonQuery();
@@ -117,11 +121,11 @@ namespace FPS
             string sql = "";
             if (string.IsNullOrEmpty(player_uuid))
             {
-                sql = "SELECT id, item_uuid, type, data " + "FROM items;";
+                sql = "SELECT id, item_uuid, type, data, properties " + "FROM items;";
             }
             else
             {
-                sql = "SELECT id, item_uuid, type, data " + "FROM items WHERE player_uuid=\"" + player_uuid + "\";";
+                sql = "SELECT id, item_uuid, type, data, properties " + "FROM items WHERE player_uuid=\"" + player_uuid + "\";";
             }
 
             dbcmd.CommandText = sql;
@@ -133,7 +137,9 @@ namespace FPS
                 //string item_uuid = reader.GetString(1);
                 //string type = reader.GetString(2);
                 string data = reader.GetString(3);
-                
+                string propertiesData = reader.GetString(4);
+
+
                 var newData = Helper.FactoreData<BaseData>(data);
 
                 BaseItem extItemDB = null;
@@ -148,6 +154,16 @@ namespace FPS
                     else
                     {
                         Debug.Log("The external DB item data does not implement the ISerializable interface");
+                    }
+
+                    IPropertySerializer propertySerializerInterface = extItemDB.Data.Properties as IPropertySerializer;
+                    if(propertySerializerInterface != null)
+                    {
+                        propertySerializerInterface.Deserialize<List<Property>>(propertiesData);
+                    }
+                    else
+                    {
+                        Debug.Log("The external DB item data property does not implement the interface IPropertySerializer");
                     }
                 }
 

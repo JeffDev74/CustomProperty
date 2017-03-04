@@ -23,8 +23,8 @@ namespace FPS
         private void Start()
         {
             //TestGetAllItems();
-            TestSaveItemCustomProperty();
-            //TestItemWithCustomProperties();
+            //TestSaveItemCustomProperty();
+            TestItemWithCustomProperties();
         }
 
         public void TestGetAllItems()

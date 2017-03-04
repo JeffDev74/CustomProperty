@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
 namespace FPS
 {
     [System.Serializable]
-	public class PropertyManager
-	{
+	public class PropertyManager : IPropertySerializer
+    {
         [SerializeField]
         public List<Property> _props;
         public List<Property> Props
@@ -86,6 +89,51 @@ namespace FPS
             }
             Debug.LogWarning("[Delete] The custom property with key of [" + key + "] does not exist.");
         }
+
+        public string Serialize()
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            MemoryStream memoryStream = new MemoryStream();
+            using (memoryStream)
+            {
+                formatter.Serialize(memoryStream, _props);
+            }
+            return Convert.ToBase64String(memoryStream.ToArray());
+        }
+
+        public void Deserialize<D>(string data) where D : List<Property>
+        {
+            try
+            {
+                Stream stream = DecodeItem(data);
+                BinaryFormatter formatter = new BinaryFormatter();
+                D newData = formatter.Deserialize(stream) as D;
+                Props = newData;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e.Message);
+                Debug.LogError(e.StackTrace);
+                throw new Exception("Failed to factore custom properties.");
+                //return null;
+            }
+        }
+
+        public static Stream DecodeItem(string data)
+        {
+            try
+            {
+                byte[] byteArray = System.Convert.FromBase64String(data);
+                var stream = new MemoryStream(byteArray);
+                stream.Seek(0, SeekOrigin.Begin);
+                return stream;
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError(ex.Message);
+                Debug.LogError(ex.StackTrace);
+                throw new System.Exception("Failed to decode item data.");
+            }
+        }
     }
-    
 }
