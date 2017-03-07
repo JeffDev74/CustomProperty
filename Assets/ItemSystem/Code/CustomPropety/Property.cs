@@ -3,7 +3,7 @@
 namespace FPS
 {
     [System.Serializable]
-    public class Property : IProperty
+    public abstract class Property : IProperty
     {
         [SerializeField]
         public string _type;
@@ -36,8 +36,10 @@ namespace FPS
             this.Value = value.ToString();
         }
 
-        public virtual string Serialize(object obj) { return obj.ToString(); }
+        public abstract string Serialize(object obj);
+        //public virtual string Serialize(object obj) { return obj.ToString(); }
 
-        public virtual T Deserialize<T>() { return default(T); }
+        public abstract T Deserialize<T>();
+        //public virtual T Deserialize<T>() { return default(T); }
     }
 }
