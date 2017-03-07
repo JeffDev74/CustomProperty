@@ -13,6 +13,7 @@ namespace FPS
         public string ItemName;
         [SerializeField]
         public ItemTypeEnum Type;
+
         [SerializeField]
         public PropertyManager Properties;
     }

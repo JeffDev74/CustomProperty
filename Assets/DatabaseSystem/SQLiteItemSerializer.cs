@@ -157,7 +157,7 @@ namespace FPS
                     }
 
                     IPropertySerializer propertySerializerInterface = extItemDB.Data.Properties as IPropertySerializer;
-                    if(propertySerializerInterface != null)
+                    if (propertySerializerInterface != null)
                     {
                         propertySerializerInterface.Deserialize<List<Property>>(propertiesData);
                     }

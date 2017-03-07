@@ -19,7 +19,7 @@ namespace FPS
             // split the items
             string[] sArray = svalue.Split(',');
 
-            // store as a Vector3
+            // store as a Vector4
             Vector4 result = new Vector4(
                 float.Parse(sArray[0]),
                 float.Parse(sArray[1]),

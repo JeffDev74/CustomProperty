@@ -19,7 +19,7 @@ namespace FPS
             // split the items
             string[] sArray = svalue.Split(',');
 
-            // store as a Vector3
+            // store as a Quaternion
             Quaternion result = new Quaternion(
                 float.Parse(sArray[0]),
                 float.Parse(sArray[1]),

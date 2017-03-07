@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace FPS
 {
@@ -19,7 +20,7 @@ namespace FPS
             // split the items
             string[] sArray = svalue.Split(',');
 
-            // store as a Vector3
+            // store as a Color
             Color result = new Color(
                 float.Parse(sArray[0]),
                 float.Parse(sArray[1]),
@@ -27,6 +28,11 @@ namespace FPS
                 float.Parse(sArray[3]));
 
             return (T)System.Convert.ChangeType(result, typeof(T));
+        }
+
+        public override string Serialize(object obj)
+        {
+            return obj.ToString();
         }
     }
 }
